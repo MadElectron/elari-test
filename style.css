@@ -1,0 +1,63 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing:  border-box;
+}
+
+p {
+  font-family: 'OpenSans Regular', Arial, sans-serif;
+}
+
+h1, h2 {
+  font-family: 'OpenSans SemiBold', Arial, sans-serif;
+}
+
+.container {
+  margin: 0 auto;
+  width: 800px;
+}
+
+.container p {
+  font-size: 1.25rem;
+}
+
+.video-wrapper {
+  position: relative;
+}
+
+.video-wrapper video {
+  width: 100%;
+}
+
+.video-text-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+}
+
+.video-text {
+  width: 50%;
+  text-align: center;
+  color: #777;
+}
+
+.video-text h2 {
+  font-size: 1.75rem;
+}
+
+.hidden {
+  opacity: 0;
+  transform: translate(0,-4em);
+  transition: 0.5s all ease;
+}
+
+.fadeIn {
+  opacity: 1;
+  transform: none;
+  transition: 0.5s all ease;
+}
