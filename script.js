@@ -1,5 +1,10 @@
+const videoWrapper = $('.video-wrapper');
+const video = videoWrapper.find('video')[0];
+const videoText = $('.video-text');
+
+
 /**
- * Applies callbackInSight  function to node if its in sight,
+ * Applies callbackInSight function to node if it's in sight,
  * and callbackOffSight function if it's not
  */
 function changeNodeBySight(node, callbackInSight, callbackOffSight) {
@@ -14,26 +19,17 @@ function changeNodeBySight(node, callbackInSight, callbackOffSight) {
   } else {
     callbackOffSight();
   }
-
-  console.log(nodeTop, nodeBottom, top, bottom);
 }
 
 /**
  * Applies changeNodeBySight to all needed elements
  */
 function changeNodes() {
-  let videoWrapper = $('.video-wrapper');
-  let video = videoWrapper.find('video')[0];
-  let videoText = $('.video-text');
 
   changeNodeBySight(videoWrapper, function() {
-    if (video.paused) {
-      video.play();
-    }
+    playOnCheck(video);
   }, function(){
-    if (!video.paused) {
-      video.pause();        
-    }
+    pauseOnCheck(video);
   });
 
   changeNodeBySight(videoText, function() {
@@ -41,9 +37,33 @@ function changeNodes() {
   }, function(){
     videoText.removeClass('fadeIn').addClass('hidden');
   });
+}
 
+/**
+ * Plays video if it's paused
+ */
+function playOnCheck(video) {
+  if (video.paused) {
+    video.play();
+  }
+}
+
+/**
+ * Pauses video if it's playing
+ */
+function pauseOnCheck(video) {
+  if (!video.paused) {
+    video.pause();        
+  }
 }
 
 $(window).on('scroll', changeNodes);
-
 $(document).ready(changeNodes);
+
+$(window).on('mouseover', function(){
+  playOnCheck(video);
+});
+$(window).on('mouseleave', function(){
+  pauseOnCheck(video);
+});
+
