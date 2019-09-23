@@ -3,7 +3,7 @@ const video = videoWrapper.find('video')[0];
 const videoText = $('.video-text');
 
 let videoRewind = true; // if video needs to be rewound
-
+let videoPlaying = true; // if video can be played (is not permanently stopped)
 
 /**
  * Applies callbackInSight function to node if it's in sight,
@@ -31,7 +31,10 @@ function changeNodes() {
   changeNodeBySight(videoWrapper, function() {
     playFromStart(video);
   }, function(){
+
+    // Video reinitialises: it can be played and is rewound
     videoRewind = true;
+    videoPlaying = true;
   });
 
   changeNodeBySight(videoText, function() {
@@ -71,13 +74,24 @@ function playFromStart() {
 }
 
 
+/**
+ * When video ends it becomes permanently stopped
+ */
+$(video).on('ended', function(){
+  videoPlaying = false;
+});
 
 $(window).on('scroll', changeNodes);
 $(document).ready(changeNodes);
 
 $(window).on('mouseover', function(){
-  playOnCheck(video);
+
+  // Video is played only when not permanently stopped
+  if(videoPlaying) { 
+    playOnCheck(video);
+  }
 });
+
 $(window).on('mouseleave', function(){
   pauseOnCheck(video);
 });
