@@ -2,6 +2,8 @@ const videoWrapper = $('.video-wrapper');
 const video = videoWrapper.find('video')[0];
 const videoText = $('.video-text');
 
+let videoRewind = true; // if video needs to be rewound
+
 
 /**
  * Applies callbackInSight function to node if it's in sight,
@@ -27,9 +29,9 @@ function changeNodeBySight(node, callbackInSight, callbackOffSight) {
 function changeNodes() {
 
   changeNodeBySight(videoWrapper, function() {
-    playOnCheck(video);
+    playFromStart(video);
   }, function(){
-    pauseOnCheck(video);
+    videoRewind = true;
   });
 
   changeNodeBySight(videoText, function() {
@@ -56,6 +58,19 @@ function pauseOnCheck(video) {
     video.pause();        
   }
 }
+
+/**
+ * Rewinds video to start and plays it
+ */
+function playFromStart() {
+  if (videoRewind) {
+    video.currentTime = 0;
+    video.play();
+  }
+  videoRewind = false;
+}
+
+
 
 $(window).on('scroll', changeNodes);
 $(document).ready(changeNodes);
